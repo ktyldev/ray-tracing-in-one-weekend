@@ -1,3 +1,6 @@
+#include "colour.h"
+#include "vec3.h"
+
 #include <iostream>
 
 const int WIDTH = 256;
@@ -14,15 +17,8 @@ int main()
 
         for (int x = 0; x < WIDTH; ++x)
         {
-            double r = double(x) / (WIDTH - 1);
-            double g = double(y) / (HEIGHT - 1);
-            double b = 0.25;
-
-            int ir = static_cast<int>(255.999 * r);
-            int ig = static_cast<int>(255.999 * g);
-            int ib = static_cast<int>(255.999 * b);
-
-            std::cout << ir << ' ' << ig << ' ' << ib << std::endl;
+            colour pixelColour(double(x)/(WIDTH-1), double(y)/(HEIGHT-1), 0.25);
+            writeColour(std::cout, pixelColour);
         }
     }
 
