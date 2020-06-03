@@ -12,7 +12,11 @@ colour rayColour(const ray& r)
 {
     vec3 unitDirection = unitVector(r.direction());
     double t = 0.5 * (unitDirection.y() + 1.0);
-    return (1.0-t) * colour(1.0,1.0,1.0) + t*colour(0.5, 0.7, 1.0);
+
+    auto a = colour(1.0, 1.0, 1.0);
+    auto b = colour(0.0, 0.0, 0.0);
+
+    return lerp(a, b, t);
 }
 
 int main()
