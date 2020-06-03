@@ -2,5 +2,10 @@ cmake_minimum_required(VERSION 3.10)
 
 project(flark)
 
-add_executable(flark main.cpp vec3.h colour.h)
+file(GLOB flark_src
+    "src/*.h"
+    "src/*.cpp"
+)
+
+add_executable(flark ${flark_src})
 
