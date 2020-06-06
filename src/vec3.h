@@ -40,10 +40,10 @@ public:
 
     double length() const 
     {
-        return std::sqrt(lengthSquared());
+        return std::sqrt(length_squared());
     }
 
-    double lengthSquared() const
+    double length_squared() const
     {
         return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
     }
@@ -112,7 +112,7 @@ inline vec3 lerp(const vec3 &a, const vec3 &b, double t)
     return (1.0 - t) * a + t * b;
 }
 
-inline vec3 unitVector(vec3 v)
+inline vec3 unit_vector(vec3 v)
 {
     return v / v.length();
 }
