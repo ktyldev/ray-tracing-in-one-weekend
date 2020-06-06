@@ -11,20 +11,27 @@ const double ASPECT_RATIO = 16.0 / 9.0;
 const int WIDTH = 384;
 const int HEIGHT = static_cast<int>(WIDTH / ASPECT_RATIO);
 const int SAMPLES_PER_PIXEL = 100;
+const int MAX_DEPTH = 50;
 
-colour ray_colour(const ray& r, const hittable& world)
+colour ray_colour(const ray& r, const hittable& world, int depth)
 {
     hit_record rec;
+    if (depth <= 0)
+    {
+        return colour(0,0,0);
+    }
+
     if (world.hit(r, 0, infinity, rec))
     {
-        return 0.5 * (rec.normal + colour(1,1,1));
+        point3 target = rec.p + rec.normal + random_in_unit_sphere();
+        return 0.5 * ray_colour(ray(rec.p, target - rec.p), world, depth-1);
     }
 
     vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5 * (unit_direction.y() + 1.0);
 
-    auto a = colour(1.0, 0.5, 0.6);
-    auto b = colour(0.0, 0.0, 0.0);
+    auto a = colour(0.5, 0.6, 0.7);
+    auto b = colour(1.0, 1.0, 1.0);
 
     return lerp(a, b, t);
 }
@@ -60,7 +67,7 @@ int main()
                 auto u = (i + random_double()) / (WIDTH-1);
                 auto v = (j + random_double()) / (HEIGHT-1);
                 ray r = cam.get_ray(u, v);
-                pixel_colour += ray_colour(r, world);
+                pixel_colour += ray_colour(r, world, MAX_DEPTH);
             }
 
             write_colour(std::cout, pixel_colour, SAMPLES_PER_PIXEL);

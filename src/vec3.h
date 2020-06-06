@@ -3,9 +3,21 @@
 #include <cmath>
 #include <iostream>
 
+#include "rtweekend.h"
+
 class vec3
 {
 public:
+    inline static vec3 random()
+    {
+        return vec3(random_double(),random_double(),random_double());
+    }
+
+    inline static vec3 random(double min, double max)
+    {
+        return vec3(random_double(min,max),random_double(min,max),random_double(min,max));
+    }
+
     vec3() : e{0,0,0} {}
     vec3(double e0, double e1, double e2) : e{e0, e1, e2} {}
 
@@ -115,4 +127,14 @@ inline vec3 lerp(const vec3 &a, const vec3 &b, double t)
 inline vec3 unit_vector(vec3 v)
 {
     return v / v.length();
+}
+
+vec3 random_in_unit_sphere()
+{
+    while (true)
+    {
+        auto p = vec3::random(-1,1);
+        if (p.length_squared() >= 1) continue;
+        return p;
+    }
 }
