@@ -7,15 +7,18 @@ class sphere : public hittable
 {
     public:
         sphere() {}
-        sphere(point3 centre, double r) : 
+        sphere(point3 centre, double r, shared_ptr<material> m) : 
             centre_(centre), 
-            radius_(r) {};
+            radius_(r),
+            mat_ptr_(m)
+    {};
 
         virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const;
 
     private:
-        point3  centre_;
-        double  radius_;
+        point3                  centre_;
+        double                  radius_;
+        shared_ptr<material>    mat_ptr_;
 };
 
 bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) const 
@@ -38,6 +41,7 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
 
             vec3 outward_normal = (rec.p - centre_) / radius_;
             rec.set_face_normal(r, outward_normal);
+            rec.mat_ptr = mat_ptr_;
 
             return true;
         }
@@ -50,6 +54,7 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
             
             vec3 outward_normal = (rec.p - centre_) / radius_;
             rec.set_face_normal(r, outward_normal);
+            rec.mat_ptr = mat_ptr_;
             
             return true;
         }

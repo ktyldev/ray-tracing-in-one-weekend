@@ -11,9 +11,9 @@ class camera
         const double FOCAL_LENGTH = 1.0;
 
         camera() : 
-            origin_(point3(0,0,0)),
-            horizontal_(vec3(VIEWPORT_WIDTH,0.0,0.0)),
-            vertical_(vec3(0.0, VIEWPORT_HEIGHT, 0.0))
+            origin_     (point3(0,0,0)),
+            horizontal_ (vec3(VIEWPORT_WIDTH,0.0,0.0)),
+            vertical_   (vec3(0.0, VIEWPORT_HEIGHT, 0.0))
         {
             lower_left_corner_ = origin_ - horizontal_/2 - vertical_/2 - vec3(0,0,FOCAL_LENGTH);
         }
