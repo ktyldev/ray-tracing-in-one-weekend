@@ -39,7 +39,7 @@ colour ray_colour(const ray& r, const hittable& world, int depth)
     auto t = 0.5 * (unit_direction.y() + 1.0);
 
     auto a = colour(0.5, 0.6, 0.7);
-    auto b = colour(1.0, 1.0, 1.0);
+    auto b = colour(0.5, 0.5, 0.5);
 
     return lerp(a, b, t);
 }
@@ -53,7 +53,7 @@ int main()
     world.add(make_shared<sphere>(
         point3(0,0,-1),
         0.5,
-        make_shared<lambertian>(colour(0.7,0.3,0.3))));
+        make_shared<lambertian>(colour(0.1,0.2,0.5))));
     world.add(make_shared<sphere>(
         point3(0,-100.5,-1),
         100,
@@ -62,11 +62,15 @@ int main()
     world.add(make_shared<sphere>(
         point3(1,0,-1),
         0.5,
-        make_shared<metal>(colour(0.8,0.6,0.2))));
+        make_shared<metal>(colour(0.8,0.6,0.2), 0.0)));
     world.add(make_shared<sphere>(
         point3(-1,0,-1),
         0.5,
-        make_shared<metal>(colour(0.8,0.8,0.8))));
+        make_shared<dielectric>(1.5)));
+    world.add(make_shared<sphere>(
+        point3(-1,0,-1),
+        -0.45,
+        make_shared<dielectric>(1.5)));
 
     camera cam;
 
